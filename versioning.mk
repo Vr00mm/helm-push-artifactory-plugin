@@ -11,10 +11,10 @@ BINARY_VERSION ?= ${GIT_TAG}
 
 # Only set Version if building a tag or VERSION is set
 ifneq ($(BINARY_VERSION),)
-	LDFLAGS += -X github.com/belitre/helm-push-artifactory-plugin/pkg/version.Version=${BINARY_VERSION}
+	LDFLAGS += -X helm-push-artifactory-plugin/pkg/version.Version=${BINARY_VERSION}
 endif
 
-LDFLAGS += -X github.com/belitre/helm-push-artifactory-plugin/pkg/version.GitCommit=${GIT_COMMIT}
+LDFLAGS += -X helm-push-artifactory-plugin/pkg/version.GitCommit=${GIT_COMMIT}
 
 info:
 	 @echo "Version:           ${VERSION}"

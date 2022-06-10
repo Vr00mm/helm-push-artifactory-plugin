@@ -24,6 +24,11 @@ func (c *Chart) SetVersion(version string) {
 	c.Metadata.Version = version
 }
 
+// SetAppVersion overrides the chart app version
+func (c *Chart) SetAppVersion(version string) {
+	c.Metadata.AppVersion = version
+}
+
 // GetChartByName returns a chart by "name", which can be
 // either a directory or .tgz package
 func GetChartByName(name string) (*Chart, error) {

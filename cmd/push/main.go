@@ -12,17 +12,18 @@ import (
 	"strconv"
 	"strings"
 
-	"github.com/belitre/helm-push-artifactory-plugin/pkg/artifactory"
-	"github.com/belitre/helm-push-artifactory-plugin/pkg/helm"
-	helmrepo "github.com/belitre/helm-push-artifactory-plugin/pkg/repo"
-	"github.com/belitre/helm-push-artifactory-plugin/pkg/version"
 	"github.com/spf13/cobra"
+	"helm-push-artifactory-plugin/pkg/artifactory"
+	"helm-push-artifactory-plugin/pkg/helm"
+	helmrepo "helm-push-artifactory-plugin/pkg/repo"
+	"helm-push-artifactory-plugin/pkg/version"
 )
 
 type (
 	pushCmd struct {
 		chartName          string
 		chartVersion       string
+		appVersion         string
 		repository         string
 		path               string
 		username           string
@@ -75,6 +76,7 @@ func newPushCmd(args []string) (*cobra.Command, error) {
 	}
 	f := cmd.Flags()
 	f.StringVarP(&p.chartVersion, "version", "v", "", "Override chart version pre-push")
+	f.StringVarP(&p.appVersion, "app-version", "", "", "Override chart app version pre-push")
 	f.StringArrayVarP(&p.overrides, "set", "s", []string{}, "<key>=<value> pairs, overrides values in chart values.yaml (example: -s image.tag=\"0.5.2\")")
 	f.StringVarP(&p.path, "path", "", "", "Path to save the chart in the local repository (https://artifactory/repo/path/chart.version.tgz) [$HELM_REPO_PATH]")
 	f.StringVarP(&p.username, "username", "u", "", "Override HTTP basic auth username [$HELM_REPO_USERNAME]")
@@ -148,6 +150,11 @@ func (p *pushCmd) push() error {
 	// version override
 	if p.chartVersion != "" {
 		chart.SetVersion(p.chartVersion)
+	}
+
+	// app version override
+	if p.appVersion != "" {
+		chart.SetAppVersion(p.appVersion)
 	}
 
 	if len(p.overrides) > 0 {

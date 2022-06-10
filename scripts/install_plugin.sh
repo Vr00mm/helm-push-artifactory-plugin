@@ -13,7 +13,7 @@ helm_version="$(helm version | grep "Version" | cut -d '"' -f 2 | cut -d '.' -f 
 
 if [ "$helm_version" != "$supported_helm_version" ]; then
     echo "Error, this version of helm-push-artifactory-plugin is only for Helm $supported_helm_version"
-    echo "Please check https://github.com/belitre/helm-push-artifactory-plugin to find the correct version"
+    echo "Please check https://helm-push-artifactory-plugin to find the correct version"
     exit 1
 fi
 
@@ -36,7 +36,7 @@ fi
 
 filename="helm-push-artifactory-v${version}-${osname}.tar.gz"
 
-url="https://github.com/belitre/helm-push-artifactory-plugin/releases/download/v${version}/${filename}"
+url="https://helm-push-artifactory-plugin/releases/download/v${version}/${filename}"
 
 echo $url
 
